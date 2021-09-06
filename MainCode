@@ -1,0 +1,19 @@
+import pyfirmata
+import time
+
+board = pyfirmata.Arduino('COM3')
+
+it = pyfirmata.util.Iterator(board)
+it.start()
+
+
+led1 = board.get_pin('d:9:o')
+led1.mode = pyfirmata.PWM
+
+potensionmeter = board.get_pin('a:0:i')
+potensionmeter.enable_reporting()
+
+while True:
+    led1.write(potensionmeter.read())
+    print(potensionmeter.read())
+    time.sleep(0.01)
